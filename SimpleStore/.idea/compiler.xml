@@ -19,7 +19,7 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="SimpleStore" target="1.5" />
+      <module name="SimpleStore" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

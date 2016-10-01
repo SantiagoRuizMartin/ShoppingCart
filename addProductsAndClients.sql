@@ -10,7 +10,7 @@
 /*==============================================================*/
 
 
-INSERT INTO `product` (`NAME`, `PRICE`, `DESCRIPTION`) VALUES
+INSERT INTO `customer` (`NAME`, `PRICE`, `DESCRIPTION`) VALUES
 ('Xbox 360', 500.00, 'Xbox console'),
 ('TV Samsung 45"', 700.00, '45" Led Tv'),
 ('iMac all included', 2300.00, 'all in one imac for home use'),
@@ -30,7 +30,7 @@ INSERT INTO `product` (`NAME`, `PRICE`, `DESCRIPTION`) VALUES
 /* --Customer Data Dump                                         */
 /*==============================================================*/
 
-INSERT INTO `customer` (`CUSTOMER_ID`, `NAME`, `EMAIL`) VALUES
+INSERT INTO `customer` (`NAME`, `EMAIL`) VALUES
 ('Santiago Ruiz', 'santiago@hotmail.com'),
 ('Wilson Guevara', 'wilson@gmail.com'),
 ('Jonnatan Garcia', 'jhonnatan@yahoo.com'),
