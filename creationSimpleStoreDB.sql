@@ -4,11 +4,11 @@
 /* Table: Creation                                              */
 /*==============================================================*/
 
-/* EJECUTAR COMO ROOT DE LA BASE DE DATOS 
-*/
-create user userstore identified by 'u$3r$t0r3';
+/* EJECUTAR COMO ROOT DE LA BASE DE DATOS */
+
+create user userstore@localhost identified by 'u$3r$t0r3';
 create database simplestoredb;
-grant ALL PRIVILEGES ON simplestoredb.* TO 'userstore'
+GRANT ALL PRIVILEGES ON simplestoredb.* TO 'userstore'@'%'
 GRANT SELECT ON `mysql`.`proc` TO 'userstore'@'%';
 
 USE simplestoredb;
