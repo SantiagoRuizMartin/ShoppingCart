@@ -16,7 +16,7 @@ public class ConnectionDealer {
             //Here we specify the host to be connected into the DB
             // asegurarse que el usuario tenga permisos sobre todos los objetos de la base de datos
             // y tambien de mysql.proc (aceeso a nombres de procedimientos almacenados)
-            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1/simplestoredb",
+            Connection conn = DriverManager.getConnection("jdbc:mysql://127.0.0.1/simplestoredba",
                     "userstore","u$3r$t0r3");
             return conn;
         } catch (SQLException e) {
