@@ -5,13 +5,14 @@
 /*==============================================================*/
 
 /* EJECUTAR COMO ROOT DE LA BASE DE DATOS */
-
+DROP USER IF EXISTS 'userstore'@'localhost' ;
 create user userstore@localhost identified by 'u$3r$t0r3';
-create database simplestoredb;
-GRANT ALL PRIVILEGES ON simplestoredb.* TO 'userstore'@'%'
-GRANT SELECT ON `mysql`.`proc` TO 'userstore'@'%';
+DROP DATABASE IF EXISTS simplestoredba;
+create database simplestoredba;
+GRANT ALL PRIVILEGES ON simplestoredba.* TO 'userstore'@'localhost';
+GRANT SELECT ON mysql.proc TO 'userstore'@'localhost';
 
-USE simplestoredb;
+USE simplestoredba;
 
 drop table if exists available_product;
 
