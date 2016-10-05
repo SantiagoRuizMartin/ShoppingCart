@@ -3,27 +3,28 @@ package com.store.model;
 
 public class OrderDetail {
 
-    private Integer order_id;
-    private Integer product_id;
+    private ClientOrder clientOrder;
+    private Product product;
     private Integer quantity;
 
-
-    public Integer getOrder_id() {
-        return order_id;
+    public ClientOrder getClientOrder() {
+        return clientOrder;
     }
 
-    public void setOrder_id(Integer order_id) {
-        this.order_id = order_id;
+    public void setClientOrder(ClientOrder clientOrder) {
+        this.clientOrder = clientOrder;
     }
 
-    public Integer getProduct_id() {
-        return product_id;
+    public Product getProduct() {
+        return product;
     }
 
-    public void setProduct_id(Integer product_id) {
-        this.product_id = product_id;
+    public void setProduct(Product product) {
+        this.product = product;
     }
 
+
+   
     public Integer getQuantity() {
         return quantity;
     }

@@ -1,31 +1,40 @@
 package com.store.model;
 
 import java.sql.Date;
+import java.util.List;
 
 public class ClientOrder {
 
 
-    private Integer order_id;
-    private Integer customer_Id;
+    private Integer orderId;
+    private Customer customer;
     private String deliveryAddress;
-    private Double exchange_rate;
+    private Double exchangeRate;
     private Date date;
+    private List<OrderDetail> orderDetail;
 
-
-    public Integer getCustomer_Id() {
-        return customer_Id;
+    public List<OrderDetail> getOrderDetail() {
+        return orderDetail;
     }
 
-    public void setCustomer_Id(Integer customer_Id) {
-        this.customer_Id = customer_Id;
+    public void setOrderDetail(List<OrderDetail> orderDetail) {
+        this.orderDetail = orderDetail;
     }
 
-    public Integer getOrder_id() {
-        return order_id;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setOrder_id(Integer order_id) {
-        this.order_id = order_id;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
+    }
+
+    public Customer getCustomer() {
+        return customer;
+    }
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
     }
 
     public String getDeliveryAddress() {
@@ -36,15 +45,21 @@ public class ClientOrder {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public Double getExchange_rate() {
-        return exchange_rate;
+    public Double getExchangeRate() {
+        return exchangeRate;
     }
 
-    public void setExchange_rate(Double exchange_rate) {
-        this.exchange_rate = exchange_rate;
+    public void setExchangeRate(Double exchangeRate) {
+        this.exchangeRate = exchangeRate;
+    }
+
+    public Date getDate() {
+        return date;
     }
 
     public void setDate(Date date) {
         this.date = date;
     }
+
+
 }

@@ -11,8 +11,16 @@ public class Product {
     private String name;
     private Double price;
     private String description;
+    private String pictureId;
 
+    public String getPictureId() {
+        return pictureId;
+    }
 
+    public void setPictureId(String pictureId) {
+        this.pictureId = pictureId;
+    }
+    
 
     public String getDescription() {
         return description;
