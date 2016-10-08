@@ -5,6 +5,7 @@
  */
 package com.store.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -18,12 +19,13 @@ import javax.persistence.OneToOne;
  * @author Estudiantes
  */
 @Entity
-class CartDetail implements Serializable {
+public class CartDetail implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer id;
     @ManyToOne
+    @JsonBackReference
     private ClientCart clientCart;
     @OneToOne
     private Product product;
@@ -68,6 +70,11 @@ class CartDetail implements Serializable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "CartDetail{" + "product=" + product + ", unit=" + unit + '}';
     }
     
     

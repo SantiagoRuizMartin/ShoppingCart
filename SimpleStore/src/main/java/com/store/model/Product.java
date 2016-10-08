@@ -1,5 +1,6 @@
 package com.store.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -19,6 +20,7 @@ public class Product implements Serializable {
     private String description;
     private String pictureId;
     @OneToOne(mappedBy = "product")
+    @JsonManagedReference
     private Stock stock;
 
     protected Product() {
@@ -78,4 +80,11 @@ public class Product implements Serializable {
     public void setPrice(Double price) {
         this.price = price;
     }
+
+    @Override
+    public String toString() {
+        return "Product{" + "name=" + name + ", price=" + price + ", stock=" + stock + '}';
+    }
+    
+    
 }

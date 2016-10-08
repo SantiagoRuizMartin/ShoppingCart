@@ -13,6 +13,5 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CartRepository extends CrudRepository<ClientCart, Integer> {
 
-    public ClientCart findByCustomerId(Integer customerId);
-   
+    ClientCart findByCustomerId(Integer id);
 }

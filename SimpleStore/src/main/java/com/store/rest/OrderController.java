@@ -37,7 +37,7 @@ public class OrderController {
             @RequestParam(value = "initDate") String initDate,
             @RequestParam(value = "endDate") String endDate) throws ParseException {
 
-        return orderRepository.findByCustomerCustomerIdAndDateOrderBetween(customerId, parseToDate(initDate), parseToDate(endDate));
+        return orderRepository.findByCustomerIdAndDateOrderBetween(customerId, parseToDate(initDate), parseToDate(endDate));
 
     }
 

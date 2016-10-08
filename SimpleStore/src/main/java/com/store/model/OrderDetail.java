@@ -1,5 +1,6 @@
 package com.store.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,8 +14,9 @@ public class OrderDetail implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer orderDetailId;
+    private Integer id;
     @ManyToOne
+    @JsonBackReference
     private ClientOrder clientOrder;
     @OneToOne
     private Product product;
@@ -54,4 +56,10 @@ public class OrderDetail implements Serializable {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "OrderDetail{" + "product=" + product + ", quantity=" + quantity + '}';
+    }
+ 
 }

@@ -12,5 +12,7 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface StockRepository extends CrudRepository<Stock, Integer> {
+    
+    public Stock findByProductId(Integer id);
    
 }

@@ -1,5 +1,6 @@
 package com.store.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.*;
@@ -12,20 +13,23 @@ public class Customer implements Serializable {
 
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
-    private Integer customerId;
+    private Integer id;
     @NotNull
     private String name;
+    @NotNull
     private String email;
     @NotNull
     private String passwordHash;
     @NotNull
     private String UserRole;
     @OneToOne(mappedBy = "customer")
+    @JsonManagedReference
     private ClientCart clientCart;
     @OneToMany(mappedBy = "customer")
+    @JsonManagedReference
     private List<ClientOrder> clientOrders;
 
-    public Customer() {
+    protected Customer() {
     }
 
     public Customer(String name, String email, String passwordHash, String userRole) {
@@ -34,14 +38,15 @@ public class Customer implements Serializable {
         this.passwordHash = passwordHash;
         this.UserRole = userRole;
     }
-    
-    public Integer getCustomerId() {
-        return customerId;
+
+    public Integer getId() {
+        return id;
     }
 
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
+    public void setId(Integer id) {
+        this.id = id;
     }
+    
 
     public String getName() {
         return name;
@@ -90,6 +95,10 @@ public class Customer implements Serializable {
     public void setClientOrders(List<ClientOrder> clientOrders) {
         this.clientOrders = clientOrders;
     }
- 
- 
+
+    @Override
+    public String toString() {
+        return "Customer{" + "name=" + name + ", email=" + email + ", UserRole=" + UserRole + '}';
+    }
+
 }

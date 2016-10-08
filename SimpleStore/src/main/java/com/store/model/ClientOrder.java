@@ -1,9 +1,13 @@
 package com.store.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -15,13 +19,15 @@ public class ClientOrder implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Integer orderId;
+    private Integer id;
     @ManyToOne
+    @JsonBackReference
     private Customer customer;
     private String deliveryAddress;
     private Double total;
     private Date dateOrder;
-    @OneToMany(mappedBy = "clientOrder")
+    @OneToMany(mappedBy = "clientOrder", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // guardar tambien los detalles
+    @JsonManagedReference
     private List<OrderDetail> orderDetail;
 
     protected ClientOrder() {
@@ -42,13 +48,15 @@ public class ClientOrder implements Serializable {
         this.orderDetail = orderDetail;
     }
 
-    public Integer getOrderId() {
-        return orderId;
+    public Integer getId() {
+        return id;
     }
 
-    public void setOrderId(Integer orderId) {
-        this.orderId = orderId;
+    public void setId(Integer id) {
+        this.id = id;
     }
+
+    
 
     public Customer getCustomer() {
         return customer;
@@ -82,4 +90,10 @@ public class ClientOrder implements Serializable {
         this.dateOrder = dateOrder;
     }
 
+    @Override
+    public String toString() {
+        return "ClientOrder{" + "customer=" + customer + ", deliveryAddress=" + deliveryAddress + ", total=" + total + ", dateOrder=" + dateOrder + ", orderDetail=" + orderDetail + '}';
+    }
+    
+   
 }

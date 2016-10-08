@@ -15,6 +15,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface OrderRepository extends CrudRepository<ClientOrder, Integer> {
 
-    List<ClientOrder> findByCustomerCustomerIdAndDateOrderBetween(Integer customerId,Date initDate, Date endDate);
+    List<ClientOrder> findByCustomerIdAndDateOrderBetween(Integer id,Date initDate, Date endDate);
+    List<ClientOrder> findByCustomerId(Integer id);
    
 }

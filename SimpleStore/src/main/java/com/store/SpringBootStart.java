@@ -1,14 +1,19 @@
 package com.store;
 
+
+import com.google.common.collect.Lists;
+import com.store.model.ClientCart;
 import com.store.model.Customer;
+import com.store.model.CartDetail;
 import com.store.model.Product;
+import com.store.repository.CartRepository;
 import com.store.repository.CustomerRepository;
 import com.store.repository.ProductRepository;
+import java.util.Arrays;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ApplicationContext;
 
-import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
@@ -20,17 +25,11 @@ public class SpringBootStart {
     private static final Logger log = LoggerFactory.getLogger(SpringBootStart.class);
 
     public static void main(String[] args) {
-
         ApplicationContext context = SpringApplication.run(SpringBootStart.class, args);
-        String[] beanNames = context.getBeanDefinitionNames();
-        Arrays.sort(beanNames);
-        for (String beanName : beanNames) {
-            System.out.println(beanName);
-        }
     }
 
     @Bean
-    public CommandLineRunner demo(CustomerRepository repository, ProductRepository repositoryP) {
+    public CommandLineRunner demo(CustomerRepository repository, ProductRepository repositoryP, CartRepository repositoryC) {
         return (args) -> {
             // solo ejecutar una vez 
             /*
@@ -53,6 +52,15 @@ public class SpringBootStart {
             repositoryP.save(new Product("Spider Mouse", 15.00, "Encase a real spider in a clear acrylic mouse and watch as your computer or laptop quickly becomes the least used PC at your home or office."));
             repositoryP.save(new Product("Light Up Shoes", 45.00, "These aren’t just any regular light up shoes, these custom made kicks are hand made to order from the designer responsible for the lighting in the TRON movie and for Daft Punk."));
             */
+            
+            // ejemplo guardando un carrito de compra
+            /*
+            Customer customer = repository.findByEmail("karen@hotmail.com");
+            ClientCart cart = new ClientCart(customer);
+            CartDetail cartdetail1 = new CartDetail(cart, repositoryP.findByName("Xbox 360") , 1);
+            cart.setCartDetail(Lists.newArrayList(cartdetail1));
+            repositoryC.save(cart);
+            */         
         };
     }
 

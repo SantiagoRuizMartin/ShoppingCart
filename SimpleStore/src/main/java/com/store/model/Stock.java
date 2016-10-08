@@ -5,6 +5,7 @@
  */
 package com.store.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +23,7 @@ public class Stock {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     @OneToOne
+    @JsonBackReference
     private Product product;
     private Integer quantity;
 
@@ -56,4 +58,12 @@ public class Stock {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
+
+    @Override
+    public String toString() {
+        return "Stock{" + "product=" + product + ", quantity=" + quantity + '}';
+    }
+    
+    
+    
 }
