@@ -1,17 +1,38 @@
 package com.store.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
-public class ClientOrder {
+@Entity
+public class ClientOrder implements Serializable {
 
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer orderId;
+    @ManyToOne
     private Customer customer;
     private String deliveryAddress;
-    private Double exchangeRate;
-    private Date date;
+    private Double total;
+    private Date dateOrder;
+    @OneToMany(mappedBy = "clientOrder")
     private List<OrderDetail> orderDetail;
+
+    protected ClientOrder() {
+    }
+
+    public ClientOrder(Customer customer, String deliveryAddress, Double total, Date date) {
+        this.customer = customer;
+        this.deliveryAddress = deliveryAddress;
+        this.total = total;
+        this.dateOrder = date;
+    }
 
     public List<OrderDetail> getOrderDetail() {
         return orderDetail;
@@ -45,21 +66,20 @@ public class ClientOrder {
         this.deliveryAddress = deliveryAddress;
     }
 
-    public Double getExchangeRate() {
-        return exchangeRate;
+    public Double getTotal() {
+        return total;
     }
 
-    public void setExchangeRate(Double exchangeRate) {
-        this.exchangeRate = exchangeRate;
+    public void setTotal(Double total) {
+        this.total = total;
     }
 
-    public Date getDate() {
-        return date;
+    public Date getDateOrder() {
+        return dateOrder;
     }
 
-    public void setDate(Date date) {
-        this.date = date;
+    public void setDateOrder(Date dateOrder) {
+        this.dateOrder = dateOrder;
     }
-
 
 }

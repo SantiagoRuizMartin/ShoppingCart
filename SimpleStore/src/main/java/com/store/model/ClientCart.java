@@ -1,17 +1,32 @@
 package com.store.model;
 
+import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
+@Entity
+public class ClientCart implements Serializable {
 
-public class ClientCart {
-
-
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Integer cartId;
-    private Integer customerId;
-    private Double exchangeRate;
+    @OneToOne
     private Customer customer;
+    @OneToMany(mappedBy =  "clientCart")
     private List<CartDetail> cartDetail;
 
+    protected ClientCart() {
+    }
+
+    public ClientCart(Customer customer) {
+        this.customer = customer;
+    }
+    
     public Integer getCartId() {
         return cartId;
     }
@@ -20,21 +35,6 @@ public class ClientCart {
         this.cartId = cartId;
     }
 
-    public Integer getCustomerId() {
-        return customerId;
-    }
-
-    public void setCustomerId(Integer customerId) {
-        this.customerId = customerId;
-    }
-
-    public Double getExchangeRate() {
-        return exchangeRate;
-    }
-
-    public void setExchangeRate(Double exchangeRate) {
-        this.exchangeRate = exchangeRate;
-    }
 
     public Customer getCustomer() {
         return customer;

@@ -24,9 +24,7 @@ function serviceFunction($http) {
             };
             $http.post(host + '/availableProducts?customerId=' + customerId, JSON.stringify(pList), config);
         },
-        getLastExchangeRate: function () {
-            return $http.get(host + '/exchange_rate')
-        },
+
         addOrder: function (order) {
             var config = {
                 headers: {
@@ -45,11 +43,7 @@ function mainCtrl($service) {
     $service.getProducts().success(function success(response) {
         scope.products = response;
     });
-    $service.getLastExchangeRate().success(function success(response) {
-        scope.lastExchangeRate = response;
-    }).error(function errorCallback(response) {
-        scope.lastExchangeRate = 0;
-    });
+    
     this.getProductById = function (id) {
         var product = {};
         angular.forEach(this.products, function (value) {

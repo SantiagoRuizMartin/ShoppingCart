@@ -1,9 +1,10 @@
 package com.store.rest;
 
-import com.store.control.OrderManager;
-import com.store.model.frontmodel.ClientOrder;
-import com.store.model.frontmodel.CompleteOrderDetail;
-import com.store.model.frontmodel.VisualOrderDetail;
+import com.store.model.ClientOrder;
+
+import com.store.model.OrderDetail;
+
+import com.store.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,34 +13,31 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 
-
 @RestController
 public class OrderController {
 
     @Autowired
-    private OrderManager orderManager;
+    private OrderRepository orderRepository;
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/order",method = RequestMethod.GET)
-    public List<VisualOrderDetail> getOrderDetail(@RequestParam(value = "id")Integer id){
-        return orderManager.getVisualOrder(id);
+    @RequestMapping(value = "/order", method = RequestMethod.GET)
+    public List<OrderDetail> getOrderDetail(@RequestParam(value = "id") Integer id) {
+        return orderRepository.findOne(id).getOrderDetail();
     }
 
     @CrossOrigin(origins = "*")
-    @RequestMapping(value = "/order",method = RequestMethod.POST)
-    public void saveOrder(@RequestBody ClientOrder clientOrder){
-        orderManager.createOrder(clientOrder);
-
+    @RequestMapping(value = "/order", method = RequestMethod.POST)
+    public void saveOrder(@RequestBody ClientOrder clientOrder) {
+        orderRepository.save(clientOrder);
     }
 
     @CrossOrigin(origins = "*")
-    @RequestMapping (value = "/order/history",method = RequestMethod.GET)
-    public List<CompleteOrderDetail> getOrderByDate(@RequestParam(value = "customerId") Integer customerId,
-                                                    @RequestParam(value = "initDate")String initDate,
-                                                    @RequestParam(value = "endDate") String endDate) throws ParseException {
+    @RequestMapping(value = "/order/history", method = RequestMethod.GET)
+    public List<ClientOrder> getOrderByDate(@RequestParam(value = "customerId") Integer customerId,
+            @RequestParam(value = "initDate") String initDate,
+            @RequestParam(value = "endDate") String endDate) throws ParseException {
 
-
-        return orderManager.getCompleteOrderDetailListByDate(customerId,parseToDate(initDate),parseToDate(endDate));
+        return orderRepository.findByCustomerCustomerIdAndDateOrderBetween(customerId, parseToDate(initDate), parseToDate(endDate));
 
     }
 
@@ -48,6 +46,5 @@ public class OrderController {
         Date dateObj = sdf.parse(date);
         return dateObj;
     }
-
 
 }

@@ -5,16 +5,39 @@
  */
 package com.store.model;
 
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
+
 /**
  *
  * @author Estudiantes
  */
-class CartDetail {
-    
+@Entity
+class CartDetail implements Serializable {
+
+    @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Integer id;
+    @ManyToOne
     private ClientCart clientCart;
+    @OneToOne
     private Product product;
     private int unit;
 
+    protected CartDetail() {
+    }
+
+    public CartDetail(ClientCart clientCart, Product product, int unit) {
+        this.clientCart = clientCart;
+        this.product = product;
+        this.unit = unit;
+    }
+    
     public ClientCart getClientCart() {
         return clientCart;
     }
@@ -37,6 +60,14 @@ class CartDetail {
 
     public void setUnit(int unit) {
         this.unit = unit;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     

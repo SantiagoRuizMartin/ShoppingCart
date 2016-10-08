@@ -18,12 +18,12 @@
 
     <div ng-show="option==1">
         <br>
-        Here you can change the products available for a customer. Select Customer:
+        Clientes:
         <br>
         <br>
         <form ng-submit="ctrl.setAvailableProducts(selectedCustomerData, newList)">
             <label> Customer: </label>
-            <select ng-model="selectedCustomerData" ng-options="data.customer.name for data in ctrl.customerData"
+            <select ng-model="selectedCustomerData" ng-options="data.name for data in ctrl.customerData"
                     ng-change="newList=selectedCustomerData.products.slice(0)" class="btn btn-default"></select>
             <div ng-show="selectedCustomerData!=undefined" class="text-left">
                 <br>
@@ -56,7 +56,7 @@
             <br>
             <div class="text-left form-group" ng-click="valid=undefined">
                 <label style="width:150px"> Customer:</label>
-                <select ng-model="orderCustomerData" ng-options="data.customer.name for data in ctrl.customerData"
+                <select ng-model="orderCustomerData" ng-options="data.name for data in ctrl.customerData"
                         ng-change="newOrder['orderDetail']=[]; newOrder['customerId']=orderCustomerData.customer.customer_id; newOrder['exchange_rate']=ctrl.lastExchangeRate"
                         class="btn btn-default">
                 </select>

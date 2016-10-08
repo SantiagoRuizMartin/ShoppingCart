@@ -1,60 +1,46 @@
 package com.store.model;
 
+import java.io.Serializable;
 import java.util.List;
-import org.springframework.data.annotation.Id;
+import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
-public class Customer {
+@Entity
+@Table(uniqueConstraints=
+@UniqueConstraint(columnNames = {"email"}))
+public class Customer implements Serializable {
 
     @Id
-    private Integer customer_id;
+    @GeneratedValue(strategy=GenerationType.AUTO)
+    private Integer customerId;
+    @NotNull
     private String name;
     private String email;
+    @NotNull
     private String passwordHash;
-    private String role;
+    @NotNull
+    private String UserRole;
+    @OneToOne(mappedBy = "customer")
     private ClientCart clientCart;
+    @OneToMany(mappedBy = "customer")
     private List<ClientOrder> clientOrders;
 
-    public ClientCart getClientCart() {
-        return clientCart;
+    public Customer() {
     }
 
-    public void setClientCart(ClientCart clientCart) {
-        this.clientCart = clientCart;
-    }
-
-    public List<ClientOrder> getClientOrders() {
-        return clientOrders;
-    }
-
-    public void setClientOrders(List<ClientOrder> clientOrders) {
-        this.clientOrders = clientOrders;
-    }
-
-    
-    public String getRole() {
-        return role;
-    }
-
-    public void setRole(String role) {
-        this.role = role;
-    }
-
-    
-    public String getPasswordHash() {
-        return passwordHash;
-    }
-
-    public void setPasswordHash(String passwordHash) {
+    public Customer(String name, String email, String passwordHash, String userRole) {
+        this.name = name;
+        this.email = email;
         this.passwordHash = passwordHash;
+        this.UserRole = userRole;
     }
     
-
-    public Integer getCustomer_id() {
-        return customer_id;
+    public Integer getCustomerId() {
+        return customerId;
     }
 
-    public void setCustomer_id(Integer customer_id) {
-        this.customer_id = customer_id;
+    public void setCustomerId(Integer customerId) {
+        this.customerId = customerId;
     }
 
     public String getName() {
@@ -72,4 +58,38 @@ public class Customer {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public String getPasswordHash() {
+        return passwordHash;
+    }
+
+    public void setPasswordHash(String passwordHash) {
+        this.passwordHash = passwordHash;
+    }
+
+    public String getUserRole() {
+        return UserRole;
+    }
+
+    public void setUserRole(String UserRole) {
+        this.UserRole = UserRole;
+    }
+
+    public ClientCart getClientCart() {
+        return clientCart;
+    }
+
+    public void setClientCart(ClientCart clientCart) {
+        this.clientCart = clientCart;
+    }
+
+    public List<ClientOrder> getClientOrders() {
+        return clientOrders;
+    }
+
+    public void setClientOrders(List<ClientOrder> clientOrders) {
+        this.clientOrders = clientOrders;
+    }
+ 
+ 
 }
