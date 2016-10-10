@@ -30,6 +30,12 @@ public class OrderController {
     public void saveOrder(@RequestBody ClientOrder clientOrder) {
         orderRepository.save(clientOrder);
     }
+    
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/order/all", method = RequestMethod.GET)
+    public List<ClientOrder> getAllOrders() {
+        return (List<ClientOrder>) orderRepository.findAll();
+    }
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/order/history", method = RequestMethod.GET)

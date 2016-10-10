@@ -1,11 +1,11 @@
 angular.module('app1', [])
-    .config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.defaults.useXDomain = true;
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    }
-    ])
-    .service("$service", ['$http', serviceFunction])
-    .controller("mainController", ['$service', mainCtrl]);
+        .config(['$httpProvider', function ($httpProvider) {
+                $httpProvider.defaults.useXDomain = true;
+                delete $httpProvider.defaults.headers.common['X-Requested-With'];
+            }
+        ])
+        .service("$service", ['$http', serviceFunction])
+        .controller("mainController", ['$service', mainCtrl]);
 
 function serviceFunction($http) {
     var host = '//localhost:8080';
@@ -14,7 +14,10 @@ function serviceFunction($http) {
             return $http.get(host + '/customer/all');
         },
         getProducts: function () {
-            return $http.get(host + '/product/all')
+            return $http.get(host + '/product/all');
+        },
+        getOrders: function () {
+            return $http.get(host + '/order/all');
         },
         setCustomerProducts: function (customerId, pList) {
             var config = {
@@ -24,7 +27,6 @@ function serviceFunction($http) {
             };
             $http.post(host + '/availableProducts?customerId=' + customerId, JSON.stringify(pList), config);
         },
-
         addOrder: function (order) {
             var config = {
                 headers: {
@@ -43,7 +45,7 @@ function mainCtrl($service) {
     $service.getProducts().success(function success(response) {
         scope.products = response;
     });
-    
+
     this.getProductById = function (id) {
         var product = {};
         angular.forEach(this.products, function (value) {
