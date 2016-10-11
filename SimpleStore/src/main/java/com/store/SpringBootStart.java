@@ -51,8 +51,7 @@ public class SpringBootStart {
             repositoryP.save(new Product("Spider Mouse", 15.00, "Encase a real spider in a clear acrylic mouse and watch as your computer or laptop quickly becomes the least used PC at your home or office."));
             repositoryP.save(new Product("Light Up Shoes", 45.00, "These aren’t just any regular light up shoes, these custom made kicks are hand made to order from the designer responsible for the lighting in the TRON movie and for Daft Punk."));
              */
-
-            // ejemplo guardando un carrito de compra
+// ejemplo guardando un carrito de compra
             /*
             Customer customer = repository.findByEmail("karen@hotmail.com");
             ClientCart cart = new ClientCart(customer);
