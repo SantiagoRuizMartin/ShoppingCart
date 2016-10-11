@@ -20,12 +20,14 @@
                </nav>
             <div ng-show="option == 1">
                 <label> Cliente: </label>
-                    <select ng-model="selectedCustomerData" ng-options="data.name for data in ctrl.customerData"
+                    <select ng-model="customerData" ng-options="data.name for data in ctrl.customerData"
                             ng-change="" class="btn btn-default"></select>
                 <br>
+                
                 <div class="container-fluid">
                     <div class="row">
                         <div ng-repeat="product in ctrl.products">
+                        <form ng-submit="ctrl.addProduct(customerData, product, quantity)">
                             <div class="clearfix visible-xs"></div>
                             <div class="col-md-3 col-md-offset-0">
                                 <div class="thumbnail">
@@ -34,15 +36,17 @@
                                         <h3>{{product.name}}</h3>
                                         <p>{{product.description}}</p>
                                         <p>
-                                            <input type="number" name="quantity" min="1" placeholder="Cantidad">
-                                            <a href="#" class="btn btn-primary" role="button">Añadir</a>
+                                            <input type="number" ng-model="quantity" min="1" value="1" placeholder="Cantidad">
+                                            <input type="submit" id="submit" value="Añadir" />
                                         </p>
                                     </div>
                                 </div>
                             </div>
+                            </form>
                         </div>
                     </div>
                 </div>
+                </form>
                 <br>
                 <form ng-submit="ctrl.setAvailableProducts(selectedCustomerData, newList)">
                     <label> Customer: </label>

@@ -27,6 +27,21 @@ function serviceFunction($http) {
             };
             $http.post(host + '/availableProducts?customerId=' + customerId, JSON.stringify(pList), config);
         },
+
+        addProductToCart: function (customerId,productId, quantity){
+            var config = {
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            };
+            var data = {
+                customerId : customerId,
+                productId : productId,
+                quantity : quantity
+        };  
+            $http.post(host + '/addProductToCart', data, config);
+        },
+
         addOrder: function (order) {
             var config = {
                 headers: {
@@ -55,6 +70,12 @@ function mainCtrl($service) {
         });
         return product;
     };
+
+    this.addProduct = function(customerData,product, quantity){
+        $service.addProductToCart(customerData.id, product.id, quantity);
+    };
+
+
     this.setAvailableProducts = function (customerData, pList) {
         if (customerData)
             this.customerData[this.customerData.indexOf(customerData)].products = pList;
