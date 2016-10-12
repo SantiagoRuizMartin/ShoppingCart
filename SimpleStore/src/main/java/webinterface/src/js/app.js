@@ -1,11 +1,11 @@
 angular.module('app1', [])
-        .config(['$httpProvider', function ($httpProvider) {
-                $httpProvider.defaults.useXDomain = true;
-                delete $httpProvider.defaults.headers.common['X-Requested-With'];
-            }
-        ])
-        .service("$service", ['$http', serviceFunction])
-        .controller("mainController", ['$service', mainCtrl]);
+    .config(['$httpProvider', function ($httpProvider) {
+        $httpProvider.defaults.useXDomain = true;
+        delete $httpProvider.defaults.headers.common['X-Requested-With'];
+    }
+    ])
+    .service("$service", ['$http', serviceFunction])
+    .controller("mainController", ['$service', mainCtrl]);
 
 function serviceFunction($http) {
     var host = '//localhost:8080';
@@ -28,17 +28,17 @@ function serviceFunction($http) {
             $http.post(host + '/availableProducts?customerId=' + customerId, JSON.stringify(pList), config);
         },
 
-        addProductToCart: function (customerId,productId, quantity){
+        addProductToCart: function (customerId, productId, quantity) {
             var config = {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             };
             var data = {
-                customerId : customerId,
-                productId : productId,
-                quantity : quantity
-        };  
+                customerId: customerId,
+                productId: productId,
+                quantity: quantity
+            };
             $http.post(host + '/addProductToCart', data, config);
         },
 
@@ -52,6 +52,8 @@ function serviceFunction($http) {
         }
     }
 }
+
+
 function mainCtrl($service) {
     scope = this;
     $service.getCustomerData().success(function (response) {
@@ -71,7 +73,7 @@ function mainCtrl($service) {
         return product;
     };
 
-    this.addProduct = function(customerData,product, quantity){
+    this.addProduct = function (customerData, product, quantity) {
         $service.addProductToCart(customerData.id, product.id, quantity);
     };
 
