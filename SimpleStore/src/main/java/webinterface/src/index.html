@@ -14,7 +14,7 @@
     <nav class="navbar navbar-default">
         <ul class="nav nav-pills nav-justified">
             <li class={{option==1?'active':''}}><a ng-click="option = 1;">Productos</a></li>
-            <li class={{option==2?'active':''}}><a ng-click="option = 2">Carrito de compra</a></li>
+            <li class={{option==2?'active':''}}><a ng-click="option = 2">Ir al Carrito de compra</a></li>
             <li class={{option==3?'active':''}}><a ng-click="option = 3">Ordenes</a></li>
         </ul>
     </nav>
@@ -39,7 +39,7 @@
                                     <p>
                                         <input type="number" ng-model="quantity" min="1" value="1"
                                                placeholder="Cantidad">
-                                        <input type="submit" id="submit" value="Añadir"/>
+                                        <input type="submit" id="submit" value="Añadir al carrito"/>
                                     </p>
                                 </div>
                             </div>

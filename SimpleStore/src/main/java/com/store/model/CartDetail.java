@@ -14,10 +14,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 
-/**
- *
- * @author Estudiantes
- */
+
 @Entity
 public class CartDetail implements Serializable {
 

@@ -22,4 +22,9 @@ public class ProductController {
         return (List<Product>) productRepository.findAll();
     }
 
+    @RequestMapping(value = "/product/byId",method = RequestMethod.GET)
+    public Product getProductById(@RequestParam (value = "productId") Integer id){
+        return productRepository.findOne(id);
+    }
+
 }

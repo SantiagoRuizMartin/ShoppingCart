@@ -5,10 +5,14 @@
  */
 package com.store.rest;
 
+import com.google.common.collect.Lists;
+import com.store.model.CartDetail;
 import com.store.model.ClientCart;
 import com.store.model.Customer;
+import com.store.model.Product;
 import com.store.repository.CartRepository;
 import com.store.repository.CustomerRepository;
+import com.store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,6 +31,9 @@ public class CartController {
     @Autowired
     private CustomerRepository customerRepository;
 
+    @Autowired
+    private ProductRepository productRepository;
+
 
     /**
      * Retorna el carrito de compras dado un cliente
@@ -38,6 +45,8 @@ public class CartController {
     public ClientCart getCartByCustomer(@RequestParam (value = "id") Integer id){
         return cartRepository.findByCustomerId(id);
     }
+
+
 
 
     /**
@@ -53,11 +62,14 @@ public class CartController {
 
         Customer customer = customerRepository.findOne(customerId);
         ClientCart cart =  cartRepository.findByCustomerId(customerId);
+        Product product = productRepository.findById(productId);
         if( cart != null){
-
+//            CartDetail cartDetail = new CartDetail(cart,product,quantity);
         }else{
             cart = new ClientCart(customer);
-
+            CartDetail cartDetail = new CartDetail(cart,product,quantity);
+            cart.setCartDetail(Lists.newArrayList(cartDetail));
+            cartRepository.save(cart);
         }
     }
 
