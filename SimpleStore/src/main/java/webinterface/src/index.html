@@ -35,7 +35,17 @@
                                 <div class="caption">
                                     <h3>{{product.name}}</h3>
                                     <h3>{{product.price | currency}}</h3>
-                                    <p>{{product.description}}</p>
+                                    <section class="tab" ng-controller="TabController as tab">
+                                        <ul class="nav nav-pills">
+                                            <li ng-class="{active:tab.isSet(1)}" >
+                                                <a href ng-click="tab.setTab(1)"> Descripción</a>
+                                            </li>
+                                        </ul>
+                                        <div class="panel" ng-show="tab.isSet(1)">
+                                            <h4>Descripción</h4>
+                                            <blockquote>{{product.description}}</blockquote>
+                                        </div>
+                                    </section>
                                     <p>
                                         <input type="number" ng-model="quantity" min="1" value="1"
                                                placeholder="Cantidad">

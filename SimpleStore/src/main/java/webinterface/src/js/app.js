@@ -1,11 +1,31 @@
-angular.module('app1', [])
-    .config(['$httpProvider', function ($httpProvider) {
-        $httpProvider.defaults.useXDomain = true;
-        delete $httpProvider.defaults.headers.common['X-Requested-With'];
-    }
-    ])
-    .service("$service", ['$http', serviceFunction])
-    .controller("mainController", ['$service', mainCtrl]);
+(function () {
+        var app = angular.module('app1', []);
+        //Main config
+        app.config(['$httpProvider', function ($httpProvider) {
+            $httpProvider.defaults.useXDomain = true;
+            delete $httpProvider.defaults.headers.common['X-Requested-With'];
+        }
+        ]);
+
+        //Service
+        app.service("$service", ['$http', serviceFunction]);
+
+        //main Controller
+        app.controller("mainController", ['$service', mainCtrl]);
+
+        //Tab Controller
+        app.controller('TabController', function () {
+            this.tab = 0;
+            this.setTab = function (newValue) {
+                this.tab = newValue;
+            }
+
+            this.isSet = function (tabname) {
+                return this.tab === tabname;
+            }
+        });
+    })();
+
 
 function serviceFunction($http) {
     var host = '//localhost:8080';
