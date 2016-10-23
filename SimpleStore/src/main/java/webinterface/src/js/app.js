@@ -62,13 +62,35 @@ function serviceFunction($http) {
             $http.post(host + '/addProductToCart', data, config);
         },
 
+        removeElementFromCart: function (cartDetailId) {
+                    var config = {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    };
+                    var data = {
+                        cartDetailId: cartDetailId,
+                    };
+        return $http.post(host + '/removeElementFromCart', data, config);
+                },
+
+        getCart: function (customerId){
+         var config = {
+                        headers: {
+                            'Content-Type': 'application/json'
+                        }
+                    };
+         return  $http.get(host + '/cart?customerId='+customerId, config);
+        },
+
         addOrder: function (order) {
             var config = {
                 headers: {
                     'Content-Type': 'application/json'
                 }
             };
-            $http.post(host + '/order', JSON.stringify(order), config);
+            //el controlador spring automaticamente enlaza el objeto
+            return $http.post(host + '/order', JSON.stringify(order), config);
         }
     }
 }
@@ -76,53 +98,67 @@ function serviceFunction($http) {
 
 function mainCtrl($service) {
     scope = this;
+    // obtener todos los clientes
     $service.getCustomerData().success(function (response) {
         scope.customerData = response;
     });
+
+    this.getOrders = function(){
+            $service.getOrders().success(function (response) {
+                scope.orders = response;
+                console.log(scope.orders)
+            });
+    };
+
+
+    //obtener todos los productos
     $service.getProducts().success(function success(response) {
         scope.products = response;
     });
+     // obtener el carrito de compras dado un cliente
+     this.getCart = function(customerData){
+     $service.getCart(customerData.id).success(function success(response){
+     scope.cart = response;
+     scope.calculateTotal();
+     })};
 
-    this.getProductById = function (id) {
-        var product = {};
-        angular.forEach(this.products, function (value) {
-            if (value.id == id) {
-                product = value;
-            }
+     // eliminar un elemento de un carrito de compras, elimina el elemento de la base de datos
+     // el objeto javascript de la lista de detalle de carrito
+     this.removeElementFromCart = function(cartDetail, $index){
+        $service.removeElementFromCart(cartDetail.id).success(function success(){
+        scope.cart.cartDetail.splice($index,1);
+        scope.calculateTotal();
         });
-        return product;
-    };
+     };
 
+    //añade un producto al carrito de compras de un cliente
     this.addProduct = function (customerData, product, quantity) {
         $service.addProductToCart(customerData.id, product.id, quantity);
     };
 
-
-    this.setAvailableProducts = function (customerData, pList) {
-        if (customerData)
-            this.customerData[this.customerData.indexOf(customerData)].products = pList;
-        $service.setCustomerProducts(customerData.customer.customer_id, pList);
-    };
-    this.validateOrder = function (order, total) {
-        if (order === undefined || order['customerId'] === undefined || total <= 0)
+    // validar carrito
+    this.validateOrder = function (cart) {
+        if (cart === undefined)
             return false;
         return true;
     };
-    this.addOrder = function (order, total) {
-        if (this.validateOrder(order, total)) {
-            $service.addOrder(order);
-            return true;
+
+    //crear orden
+    this.addOrder = function (cart, deliveryAddress, customer) {
+        if (this.validateOrder(cart)) {
+        //crear la orden como objeto javascript con los mismos atributos de la clase para subirlos en json
+        var order = {customer: customer, deliveryAddress: deliveryAddress, orderDetail: cart.cartDetail, total: scope.total};
+            $service.addOrder(order).success(function success(){
+            scope.cart = null;
+            });
         }
-        return false;
     };
-    this.calculateTotal = function (detail) {
-        var total = 0;
-        angular.forEach(detail, function (value) {
-            if (value.productId > 0) {
-                var productPrice = scope.getProductById(value.productId).price;
-                total = total + productPrice * value.quantity;
-            }
+
+    //calcular total, aun no funciona
+    this.calculateTotal = function () {
+        scope.total = 0;
+        angular.forEach(scope.cart.cartDetail, function (value) {
+                scope.total = scope.total + value.unit * value.product.price;
         });
-        return total;
     };
 }

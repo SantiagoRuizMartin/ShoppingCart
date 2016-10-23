@@ -16,6 +16,7 @@ import com.store.repository.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -37,13 +38,13 @@ public class CartController {
     /**
      * Retorna el carrito de compras dado un cliente
      *
-     * @param id
+     * @param customerId
      * @return
      */
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/cart", method = RequestMethod.GET)
-    public ClientCart getCartByCustomer(@RequestParam(value = "id") Integer id) {
-        return cartRepository.findByCustomerId(id);
+    public ClientCart getCartByCustomer(@RequestParam(value = "customerId") Integer customerId) {
+        return cartRepository.findByCustomerId(customerId);
     }
 
 
@@ -71,6 +72,19 @@ public class CartController {
             cart.setCartDetail(Lists.newArrayList(cartDetail));
         }
         cartRepository.save(cart);
+    }
+
+
+    /**
+     * remover producto del carrito de compras
+     *
+     * @param json parametros de id de cliente, y el producto
+     */
+    @CrossOrigin(origins = "*")
+    @RequestMapping(value = "/removeElementFromCart", method = RequestMethod.POST)
+    public void removeElementFromCart(@RequestBody Map<String, String> json) {
+        Integer cartDetailId = new Integer(json.get("cartDetailId"));
+        cartRepository.deleteCartDetailById(cartDetailId);
     }
 
 }

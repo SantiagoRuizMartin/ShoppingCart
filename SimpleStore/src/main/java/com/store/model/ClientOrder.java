@@ -3,7 +3,7 @@ package com.store.model;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
@@ -13,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
 
 @Entity
 public class ClientOrder implements Serializable {
@@ -25,6 +26,7 @@ public class ClientOrder implements Serializable {
     private Customer customer;
     private String deliveryAddress;
     private Double total;
+    @Temporal(javax.persistence.TemporalType.DATE)
     private Date dateOrder;
     @OneToMany(mappedBy = "clientOrder", cascade = CascadeType.ALL, fetch = FetchType.EAGER) // guardar tambien los detalles
     @JsonManagedReference

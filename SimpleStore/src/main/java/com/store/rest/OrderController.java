@@ -1,9 +1,11 @@
 package com.store.rest;
 
+import com.store.model.ClientCart;
 import com.store.model.ClientOrder;
 
 import com.store.model.OrderDetail;
 
+import com.store.repository.CartRepository;
 import com.store.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -19,6 +21,10 @@ public class OrderController {
     @Autowired
     private OrderRepository orderRepository;
 
+    @Autowired
+    private CartRepository cartRepository;
+
+
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/order", method = RequestMethod.GET)
     public List<OrderDetail> getOrderDetail(@RequestParam(value = "id") Integer id) {
@@ -28,7 +34,14 @@ public class OrderController {
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/order", method = RequestMethod.POST)
     public void saveOrder(@RequestBody ClientOrder clientOrder) {
+        //establecer fecha
+        clientOrder.setDateOrder(new Date());
+        // crear orden
         orderRepository.save(clientOrder);
+        // limpiar carrito
+        ClientCart cart = clientOrder.getCustomer().getClientCart();
+        cartRepository.delete(cart);
+
     }
     
     @CrossOrigin(origins = "*")
