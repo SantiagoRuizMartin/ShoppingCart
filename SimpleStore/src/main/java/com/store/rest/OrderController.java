@@ -3,9 +3,11 @@ package com.store.rest;
 import com.store.model.ClientCart;
 import com.store.model.ClientOrder;
 
+import com.store.model.Customer;
 import com.store.model.OrderDetail;
 
 import com.store.repository.CartRepository;
+import com.store.repository.CustomerRepository;
 import com.store.repository.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -24,6 +26,9 @@ public class OrderController {
     @Autowired
     private CartRepository cartRepository;
 
+    @Autowired
+    private CustomerRepository customerRepository;
+
 
     @CrossOrigin(origins = "*")
     @RequestMapping(value = "/order", method = RequestMethod.GET)
@@ -39,8 +44,9 @@ public class OrderController {
         // crear orden
         orderRepository.save(clientOrder);
         // limpiar carrito
-        ClientCart cart = clientOrder.getCustomer().getClientCart();
-        cartRepository.delete(cart);
+        Customer customer = customerRepository.findOne(clientOrder.getCustomer().getId());
+        //ClientCart cart = clientOrder.getCustomer().getClientCart();
+        cartRepository.delete(customer.getClientCart());
 
     }
     
